@@ -1,0 +1,13 @@
+- unless @me.taken?
+  p
+    = link_to authorize_room_player_path(room_id: params[:room_id], id: params[:id]), method: :post, class: 'btn btn-primary' do
+      | 対戦を開始する
+- else
+  - if @me.role == 'first'
+    p
+      | 以下のページを最初に閲覧した人が、あなたの対戦相手になります。
+      pre= room_player_url(room_id: @target.room_id, id: @target.id)
+
+  = turbo_stream_from @me, :board
+  .board-controller id="room-#{@room.id}"
+    = render partial: 'board', locals: { room: @room, player: @me }

@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    profiles:
+      - donotstart
+  postgres:
+    env_file: .env.development
+    ports:
+      - "127.0.0.1:5432:5432"
+  redis:
+    ports:
+      - "127.0.0.1:6379:6379"
+

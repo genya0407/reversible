@@ -1,0 +1,8 @@
+services:
+  web:
+    image: docker.genya0407.net/reversible_web:${TAG}
+    ports:
+      - "127.0.0.1:${PORT:?err}:3000"
+    env_file: .env.production
+  postgres:
+    env_file: .env.production

@@ -1,0 +1,54 @@
+- request_id = SecureRandom.uuid
+- board = room.board
+- attackable = board.movable_role == player.role
+
+// TODO: 見た目をマシにする
+p
+  ruby: 
+    def role_i18n(my_role, evaluate_role)
+      if my_role == 'watcher'
+        case evaluate_role
+        when 'first_attacker'
+          '先手'
+        when 'second_attacker'
+          '後手'
+        else
+          raise "unexpected role #{evaluate_role}"
+        end
+      else
+        my_role == evaluate_role ? 'あなた' : '相手'
+      end
+    end
+  .board-info-container
+    - if board.finished? && board.winner
+      .alert.alert-primary.board-warning
+        b= role_i18n(player.role, board.winner)
+        | の勝ちです
+    - elsif board.finished? && board.winner.nil?
+      .alert.alert-primary.board-warning
+        | 引き分けです
+    - else
+      .alert.alert-primary.board-info
+        b= role_i18n(player.role, board.movable_role)
+        | の手番です
+
+- if attackable && !board.finished? && board.passable?
+  p
+    .board-info-container
+      = link_to room_player_moves_path(room_id: player.room_id, player_id: player.id, pass: true, request_id: request_id), method: :post do
+        .btn.btn-primary
+          | パスする
+
+.board-view
+  .board
+    - movable_squares = attackable ? board.calculate_movable_squares.to_set : Set.new
+    - board.squares.each.with_index do |rows, y|
+      - rows.each.with_index do |row, x|
+        .board-square
+          - if row == 'first_attacker'
+            .first
+          - elsif row == 'second_attacker'
+            .second
+          - elsif movable_squares.include?([x, y])
+            = link_to room_player_moves_path(room_id: player.room_id, player_id: player.id, x: x, y: y, request_id: request_id), method: :post do
+              .movable

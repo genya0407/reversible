@@ -1,0 +1,58 @@
+@import "bootstrap";
+
+// 盤が画面に収まるように
+$board-square-size: 8vmin;
+
+.board {
+  display: grid;
+  // 8 x 8
+  grid-template-columns: repeat(8, $board-square-size);
+  grid-template-rows: repeat(8, $board-square-size);
+  // グリッド線を描画するためのハック
+  // .board-square も合せて見よ
+  background-color: black;
+  grid-gap: 2px;
+}
+
+.board-square {
+  width: $board-square-size;
+  height: $board-square-size;
+  // グリッド線を描画するためのハック
+  // .board も合せて見よ
+  background-color: green;
+}
+
+.piece {
+  width: $board-square-size;
+  height: $board-square-size;
+  border-radius: 50%;
+}
+
+.board-square > .first {
+  @extend .piece;
+  background-color: white;
+}
+
+.board-square > .second {
+  @extend .piece;
+  background-color: black;
+}
+
+.board-square .movable {
+  @extend .piece;
+  border: dashed 3px black;
+}
+
+.board-view {
+  display: flex;
+  justify-content: center;
+}
+
+.board-info-container {
+  display: flex;
+  justify-content: center;
+}
+
+.board-info {
+  width: 30vmin;
+}

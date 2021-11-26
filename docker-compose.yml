@@ -1,0 +1,26 @@
+version: '3'
+services:
+  web:
+    command: bundle exec rails server -b 0.0.0.0 -p 3000
+    restart: always
+    platform: linux/amd64
+    links:
+      - postgres
+      - redis
+    depends_on:
+      - postgres
+      - redis
+  postgres:
+    image: postgres:12-alpine
+    restart: always
+    platform: linux/amd64
+    volumes:
+      - reversible_pg_data:/var/lib/postgresql/data 
+  redis:
+    image: redis
+    restart: always
+    platform: linux/amd64
+
+volumes:
+  reversible_pg_data:
+    external: true

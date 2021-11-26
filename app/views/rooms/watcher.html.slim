@@ -1,0 +1,8 @@
+= turbo_stream_from @me, :board
+
+.d-flex.justify-content-center
+  .alert.alert-warn
+    | 観戦モードです
+
+.board-controller id="room-#{@room.id}"
+  = render partial: 'board', locals: { room: @room, player: @me }

@@ -1,0 +1,8 @@
+- unless @second_attacker.taken?
+  p
+    = link_to authorize_room_player_path(room_id: params[:id], id: @second_attacker.id), method: :post, class: 'btn btn-primary' do
+      | 対戦を開始する
+
+p
+  = link_to watcher_room_url(room_id: params[:room_id]), class: 'btn btn-primary' do
+    | 観戦する

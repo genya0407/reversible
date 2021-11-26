@@ -1,0 +1,27 @@
+create_table "players", force: :cascade do |t|
+  t.string "room_id", null: false
+  t.integer "role", null: false
+  t.string "session_token"
+  t.datetime "created_at"
+  t.datetime "updated_at"
+  t.index ["room_id", "role"], unique: true
+end
+
+create_table "rooms", id: :string, force: :cascade do |t|
+  t.text "board_json", null: false
+  t.datetime "created_at"
+  t.datetime "updated_at"
+end
+
+create_table "moves", force: :cascade do |t|
+  t.string "player_id", null: false
+  t.string "room_id", null: false
+  t.string "request_id", null: false
+  t.string "attacker_role", null: false
+  t.boolean "pass", default: false, null: false
+  t.integer "x"
+  t.integer "y"
+  t.datetime "created_at"
+  t.datetime "updated_at"
+  t.index ["player_id", "room_id"]
+end

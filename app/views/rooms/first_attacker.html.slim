@@ -1,0 +1,12 @@
+= turbo_stream_from @me, :board
+
+.d-flex.justify-content-center
+  p
+    | 以下のリンクから対戦相手・観戦者を募集できます。
+
+.d-flex.justify-content-center
+  p= link_to room_url(id: @room.id) do
+    = room_url(id: @room.id)
+
+.board-controller id="room-#{@room.id}"
+  = render partial: 'board', locals: { room: @room, player: @me }
